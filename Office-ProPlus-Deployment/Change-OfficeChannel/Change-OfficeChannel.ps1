@@ -1,7 +1,6 @@
 ﻿param(
     [Parameter()]
-    [ValidateSet("FirstReleaseCurrent","Current","FirstReleaseDeferred","Deferred",
-                 "MonthlyTargeted","Monthly","SemiAnnualTargeted","SemiAnnual")]
+    [ValidateSet("FirstReleaseCurrent","Current","FirstReleaseDeferred","Deferred","MonthlyTargeted","Monthly","SemiAnnualTargeted","SemiAnnual","BetaChannel","CurrentPreview","MonthlyEnterprise","SemiAnnualPreview")]
     [string]$Channel,
 
     [Parameter()]
@@ -340,11 +339,31 @@ Else {
 }
 }
 
-function Test-ItemPathUNC() {    [CmdletBinding()]	
+function Test-ItemPathUNC() {
+    [CmdletBinding()]	
     Param
-	(	    [Parameter(Mandatory=$true)]
-	    [String]$Path,	    [Parameter()]
-	    [String]$FileName = $null    )    Process {       $pathExists = $false       if ($FileName) {         $filePath = "$Path\$FileName"         $pathExists = [System.IO.File]::Exists($filePath)       } else {         $pathExists = [System.IO.Directory]::Exists($Path)         if (!($pathExists)) {            $pathExists = [System.IO.File]::Exists($Path)         }       }       return $pathExists;    }}
+	(
+	    [Parameter(Mandatory=$true)]
+	    [String]$Path,
+
+	    [Parameter()]
+	    [String]$FileName = $null
+    )
+
+    Process {
+       $pathExists = $false
+       if ($FileName) {
+         $filePath = "$Path\$FileName"
+         $pathExists = [System.IO.File]::Exists($filePath)
+       } else {
+         $pathExists = [System.IO.Directory]::Exists($Path)
+         if (!($pathExists)) {
+            $pathExists = [System.IO.File]::Exists($Path)
+         }
+       }
+       return $pathExists;
+    }
+}
 
 Function Validate-UpdateSource() {
     [CmdletBinding()]
